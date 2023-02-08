@@ -3,13 +3,14 @@ import { Post } from "@prisma/client";
 import { GetServerSideProps } from "next";
 import { User } from "next-auth";
 import Image from "next/image";
+import Link from "next/link";
 
 const UserPage = ({
   user,
   posts,
 }: {
   user: Pick<User, "id" | "name" | "image">;
-  posts: Post[];
+  posts: Pick<Post, "id" | "title" | "description" | "imageUrl">[];
 }) => {
   return (
     <div className="px-2 py-8 bg-slate-200 min-h-screen">
@@ -26,24 +27,26 @@ const UserPage = ({
         <div className="mt-8 grid gap-x-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
           {posts.map((post) => {
             return (
-              <div className="bg-white rounded-md overflow-hidden group relative w-56 aspect-square">
-                <div className="absolute z-10 w-full h-full group-hover:bg-slate-800/70 duration-150" />
-                <div className="px-2 py-2 group-hover:opacity-100 opacity-0 duration-150 absolute z-10 text-white text-center flex flex-col items-center justify-center w-full h-full">
-                  <span className="font-semibold italic text-xl">
-                    {post.title}
-                  </span>
-                  <span className="line-clamp-3 font-light text-ellipsis">
-                    {post.description}
-                  </span>
-                </div>
+              <Link href={`/artwork/${post.id}`} key={post.id}>
+                <div className="bg-white rounded-md overflow-hidden group relative w-56 aspect-square">
+                  <div className="absolute z-10 w-full h-full group-hover:bg-slate-800/70 duration-150" />
+                  <div className="px-2 py-2 group-hover:opacity-100 opacity-0 duration-150 absolute z-10 text-white text-center flex flex-col items-center justify-center w-full h-full">
+                    <span className="font-semibold italic text-xl">
+                      {post.title}
+                    </span>
+                    <span className="line-clamp-3 font-light text-ellipsis">
+                      {post.description}
+                    </span>
+                  </div>
 
-                <Image
-                  alt={`${user.name}'s artwork`}
-                  src={post.imageUrl}
-                  fill
-                  className="object-cover object-center"
-                />
-              </div>
+                  <Image
+                    alt={`${user.name}'s artwork`}
+                    src={post.imageUrl}
+                    fill
+                    className="object-cover object-center"
+                  />
+                </div>
+              </Link>
             );
           })}
         </div>
@@ -72,6 +75,7 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
       authorId: user.id,
     },
     select: {
+      id: true,
       title: true,
       description: true,
       imageUrl: true,

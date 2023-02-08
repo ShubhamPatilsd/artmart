@@ -11,6 +11,7 @@ export const handle = async (req: NextApiRequest, res: NextApiResponse) => {
       const posts = await db.post.findMany({
         include: {
           author: true,
+          Trade: true,
         },
       });
 

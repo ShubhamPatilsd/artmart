@@ -18,7 +18,7 @@ export const Post: React.FC<PostProps> = ({
   return (
     <div
       className={
-        "rounded-lg border-2 border-purple-200 shadow-lg shadow-purple-100"
+        "hover:bg-white hover:border-transparent hover:shadow-lg duration-100 rounded-md border border-gray-300 p-4"
       }
     >
       {/* TODO: change this to nextjs image */}

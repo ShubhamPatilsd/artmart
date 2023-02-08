@@ -9,6 +9,7 @@ import React, {
   useState,
 } from "react";
 import { FiUploadCloud } from "react-icons/fi";
+import { useRouter } from "next/router";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -20,6 +21,7 @@ export default function CreateArtwork() {
   const [category, setCategory] = useState<string>();
   const [preference, setPreference] = useState<string>();
   const [uploading, setUploading] = useState(false);
+  const router = useRouter();
 
   const handleFileChange = async (
     event: React.ChangeEvent<HTMLInputElement>
@@ -44,6 +46,9 @@ export default function CreateArtwork() {
   };
 
   const submitArt = async () => {
+    if (!title || !description || !previewUrl || !category || !preference) {
+      return;
+    }
     await fetch("/api/post/create", {
       method: "POST",
       body: JSON.stringify({
@@ -57,6 +62,8 @@ export default function CreateArtwork() {
         "Content-Type": "application/json",
       },
     });
+
+    router.push("/dashboard");
     console.log("clearing....");
     setTitle("");
     setDescription("");
@@ -67,9 +74,9 @@ export default function CreateArtwork() {
   };
 
   return (
-    <>
+    <div className="bg-slate-200">
       <div
-        className={`md:py-24 md:px-36 px-24 py-16 space-y-2 min-h-screen bg-slate-200`}
+        className={`mx-auto max-w-3xl md:py-24 md:px-36 px-24 py-16 space-y-2 min-h-screen`}
       >
         <p className="text-4xl font-bold mb-8">Upload your artwork!</p>
         <div className="w-full space-y-1">
@@ -208,12 +215,15 @@ export default function CreateArtwork() {
         <img src={previewUrl} />
 
         <button
+          disabled={
+            !title || !description || !previewUrl || !category || !preference
+          }
           onClick={() => submitArt()}
-          className="rounded-md px-6 py-3.5 font-bold bg-gradient-to-r from-fuchsia-500 via-purple-500 to-indigo-600 hover:from-pink-400 hover:via-fuchsia-600 hover:to-purple-700 text-white text-lg w-full"
+          className="disabled:saturate-50 disabled:cursor-not-allowed rounded-md px-6 py-3.5 font-bold bg-gradient-to-r from-fuchsia-500 via-purple-500 to-indigo-600 enabled:hover:from-pink-400 enabled:hover:via-fuchsia-600 enabled:hover:to-purple-700 text-white text-lg w-full"
         >
           Post
         </button>
       </div>
-    </>
+    </div>
   );
 }

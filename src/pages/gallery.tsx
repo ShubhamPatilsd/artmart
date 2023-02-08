@@ -7,49 +7,43 @@ import { useSession, signIn, signOut } from "next-auth/react";
 import { FcGoogle } from "react-icons/fc";
 import { db } from "@/db/db";
 import { Post } from "@/components/Post";
+import { Post as PostType } from "@prisma/client";
+import { useRouter } from "next/router";
 
-export default function Gallery({ posts }: { posts: Post[] }) {
+export default function Dashboard({
+  posts,
+}: {
+  posts: (PostType & {
+    author: {
+      name: string;
+      image: string;
+    };
+  })[];
+}) {
+  const router = useRouter();
+
   return (
-    <div
-      className={`md:py-24 md:px-36 px-24 py-16 space-y-2 min-h-screen bg-slate-200 flex flex-col items-center`}
-    >
-      <p className="font-bold text-6xl p-2 rounded-lg  w-fit">Gallery</p>
-      <div className="grid grid-cols-3 gap-4 p-8">
-        {posts.map((post, i) => {
-          return (
-            <div>
-              <Post
-                coverPhoto={post.imageUrl}
-                authorName={post.author.name}
-                authorPhoto={post.author.image}
-                title={post.title}
-                description={post.description}
-                category={post.category}
-              />
-            </div>
-          );
-        })}
+    <div className="bg-slate-200 px-8">
+      <div className="max-w-5xl mx-auto py-8">
+        <div className="grid grid-cols-3 gap-4">
+          {posts.map((post, i) => {
+            return (
+              <Link href={`/artwork/${post.id}`} key={post.id}>
+                <Post
+                  coverPhoto={post.imageUrl}
+                  authorName={post.author.name}
+                  authorPhoto={post.author.image}
+                  title={post.title}
+                  description={post.description}
+                  category={post.category}
+                />
+              </Link>
+            );
+          })}
+        </div>
       </div>
     </div>
   );
-}
-
-interface Post {
-  id: string;
-  title: string;
-  description: string;
-  imageUrl: string;
-  category: string;
-  preferredTrade: string;
-  authorId: string;
-  createdAt: Date;
-  updatedAt: Date;
-  author: Author;
-}
-
-interface Author {
-  image: string;
-  name: string;
 }
 
 export const getServerSideProps = async () => {
@@ -60,10 +54,10 @@ export const getServerSideProps = async () => {
         select: {
           image: true,
           name: true,
+          email: true,
         },
       },
     },
   });
-  console.log(JSON.stringify(posts));
   return { props: { posts: JSON.parse(JSON.stringify(posts)) } };
 };
