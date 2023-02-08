@@ -28,7 +28,7 @@ export const handle = async (req: NextApiRequest, res: NextApiResponse) => {
             imageUrl: imageUrl,
             category: category,
             preferredTrade: preferredTrade,
-            userId: user.id,
+            authorId: user.id,
           },
         });
 
