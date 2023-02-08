@@ -2,9 +2,10 @@ import { NextApiRequest, NextApiResponse } from "next";
 import { getServerSession } from "next-auth";
 import { authOptions } from "../auth/[...nextauth]";
 import { db } from "../../../db/db";
+import { PostType } from "@prisma/client";
 
-export const handle = async (req: NextApiRequest, res: NextApiResponse) => {
-  if (req.method == "POST") {
+export const handler = async (req: NextApiRequest, res: NextApiResponse) => {
+  if (req.method === "POST") {
     const { title, description, imageUrl, category, preferredTrade } = req.body;
     const session = await getServerSession(req, res, authOptions);
 
@@ -21,6 +22,14 @@ export const handle = async (req: NextApiRequest, res: NextApiResponse) => {
       if (!user) {
         return res.status(404).send("user-not-found");
       } else {
+        console.log({
+          title: title,
+          description: description,
+          imageUrl: imageUrl,
+          category: category,
+          preferredTrade: preferredTrade,
+          userId: user.id,
+        });
         const post = await db.post.create({
           data: {
             title: title,
@@ -43,3 +52,5 @@ export const handle = async (req: NextApiRequest, res: NextApiResponse) => {
     }
   }
 };
+
+export default handler;

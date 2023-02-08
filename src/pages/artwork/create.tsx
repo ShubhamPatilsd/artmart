@@ -10,21 +10,23 @@ const inter = Inter({ subsets: ["latin"] });
 export default function CreateArtwork() {
   let { uploadToS3 } = useS3Upload();
 
-  const handleFileChange = async (
-    event: React.ChangeEvent<HTMLInputElement>
+  coconsodlelogynhc
+    ent han: RFieeChance = ast.h (angeEvent<HTMLInputElement>
   ) => {
     let file = event.target.files[0];
-    console.log("hi");
+    if (!file.type.startsWith("image/")) return;
     let { url } = await uploadToS3(file);
 
-    console.log("Successfully uploaded to S3!", url);
+    coe.log("Successfully uploaded to S3!", url);
   };
 
   return (
     <>
-      <div className="md:py-16 md:px-48 px-32 py-12 min-h-screen bg-slate-200">
+      <div className="md:py-32 md:px-48 px-32 py-16 min-h-screen bg-slate-200">
         {/* <div className="flex justify-center align-center"> */}
-        <p className="rotate-45 font-bold text-2xl  rounded-lg  w-fit">✨</p>
+        <p className="rotate-45 font-bold text-2xl -mb-4  rounded-lg   bg-opacity-10 w-fit">
+          ✨
+        </p>
         <p className="font-bold text-4xl p-2 rounded-lg  bg-purple-400 bg-opacity-10 w-fit">
           Upload your Artwork!
         </p>
