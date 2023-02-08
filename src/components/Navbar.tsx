@@ -13,7 +13,7 @@ const Navbar = () => {
         </div>
         {status === "loading" ? null : status === "authenticated" ? (
           <div className="space-x-3">
-            <span>{session.user!.name}</span>
+            <Link href={`/user/${session.user!.id}`}>{session.user!.name}</Link>
             <span>|</span>
             <button
               className="bg-purple-200 px-2 hover:bg-purple-300 rounded-md"
