@@ -16,96 +16,121 @@ import truncate from "truncate";
 import useCollapse from "react-collapsed";
 import { VscTriangleRight } from "react-icons/vsc";
 import { HiX, HiOutlineBadgeCheck } from "react-icons/hi";
+import { Trade, TradeStatus, User } from "@prisma/client";
 
-const dummyData = [
-  {
-    subject: "New trade request for Mono Liso from Gautam Paranjape",
-    imageUrl:
-      "https://evergreen-media.s3.us-west-1.amazonaws.com/next-s3-uploads/606df81b-8e37-424d-a5d9-9fd7cad00372/Frame-1-(2).png",
-  },
-  {
-    subject: "New trade request for Mono Liso from Gautam Paranjape",
-  },
-  {
-    subject: "New trade request for Mono Liso from Gautam Paranjape",
-  },
-  {
-    subject: "New trade request for Mono Liso from Gautam Paranjape",
-  },
-  {
-    subject: "New trade request for Mono Liso from Gautam Paranjape",
-  },
-  {
-    subject: "New trade request for Mono Liso from Gautam Paranjape",
-  },
-  {
-    subject: "New trade request for Mono Liso from Gautam Paranjape",
-  },
-];
-
-export default function Inbox({ posts }: { posts: any[] }) {
+const List = ({
+  posts,
+}: {
+  posts: (Trade & {
+    postInQuestion: Post;
+    to: User;
+    from: User;
+  })[];
+}) => {
   const router = useRouter();
-
   return (
     <div className="flex justify-center">
-      <div className="w-[75%] pt-2">
+      <div className="w-full space-y-2">
         {posts.map((post, i) => {
-          const { getCollapseProps, getToggleProps, isExpanded } =
-            useCollapse();
           return (
             <div
               className={`${
                 i !== 0 && "border-t"
-              } hover:shadow-md relative px-6 py-4  justify-between cursor-pointer border-purple-300 shadow-purple-200`}
+              } relative px-6 py-4  justify-between cursor-pointer border-2 rounded-md hover:bg-slate-100`}
             >
               <div className="flex items-center justify-between">
                 <p className="font-bold font-mono text-gray-600 text-sm text-left">
-                  New trade request for {post.postInQuestion.title}
+                  {post.postInQuestion.title}
                 </p>
 
                 <div className="flex rounded-md border">
                   {/* <button> */}
                   <HiOutlineBadgeCheck
-                    className="p-2 hover:bg-slate-100 hover:text-purple-700 rounded-l-md"
+                    className="p-2 hover:bg-emerald-100 hover:text-emerald-700 rounded-l-md"
                     size={35}
-                    onClick={() => {
-                      alert("hi");
+                    onClick={async () => {
+                      await fetch("/api/trade/accept", {
+                        method: "POST",
+                        headers: {
+                          "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify({
+                          tradeId: post.id,
+                        }),
+                      });
+                      router.replace(router.asPath);
                     }}
                   />
 
                   <HiX
-                    className="p-2 hover:bg-slate-100 hover:text-red-700 rounded-r-md border-l"
+                    className="p-2 hover:bg-red-100 hover:text-red-700 rounded-r-md border-l"
                     size={35}
-                    onClick={() => {
-                      alert("hi");
+                    onClick={async () => {
+                      await fetch("/api/trade/decline", {
+                        method: "POST",
+                        headers: {
+                          "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify({
+                          tradeId: post.id,
+                        }),
+                      });
+                      router.replace(router.asPath);
                     }}
                   />
                   {/* </button> */}
                 </div>
               </div>
-              <button
-                className="mt-2 flex space-x-1 items-center"
-                {...getToggleProps()}
-              >
-                {" "}
-                <VscTriangleRight
-                  className={`${isExpanded && "rotate-90"} text-gray-600`}
-                  size={12}
-                />
-                <p className="text-xs text-gray-600 mb-1">Expand</p>
-              </button>
-
-              {isExpanded}
-              <p {...getCollapseProps()} className="">
-                {" "}
-                <img
-                  src={post.imageUrl}
-                  className="w-full max-w-xl h-auto rounded-md"
-                />
-              </p>
+              <img
+                src={post.imageUrl}
+                className="w-full max-w-sm h-auto rounded-md"
+              />
             </div>
           );
         })}
+      </div>
+    </div>
+  );
+};
+
+export default function Inbox({
+  posts: { pendingRequests, acceptedRequests, rejectedRequests },
+}: {
+  posts: {
+    pendingRequests: (Trade & {
+      postInQuestion: Post;
+      to: User;
+      from: User;
+    })[];
+    acceptedRequests: (Trade & {
+      postInQuestion: Post;
+      to: User;
+      from: User;
+    })[];
+    rejectedRequests: (Trade & {
+      postInQuestion: Post;
+      to: User;
+      from: User;
+    })[];
+  };
+}) {
+  return (
+    <div className="bg-slate-200 min-h-screen">
+      <div className="max-w-4xl mx-auto py-6 space-y-6">
+        <div className="bg-white py-4 px-4 rounded-md">
+          <h2 className="text-2xl font-bold mb-2">Pending</h2>
+          <List posts={pendingRequests} />
+        </div>
+
+        <div className="bg-white py-4 px-4 rounded-md">
+          <h2 className="text-2xl font-bold mb-2">Accepted</h2>
+          <List posts={acceptedRequests} />
+        </div>
+
+        <div className="bg-white py-4 px-4 rounded-md">
+          <h2 className="text-2xl font-bold mb-2">Rejected</h2>
+          <List posts={rejectedRequests} />
+        </div>
       </div>
     </div>
   );
@@ -114,9 +139,10 @@ export default function Inbox({ posts }: { posts: any[] }) {
 export const getServerSideProps = async (context: any) => {
   const session = await getServerSession(context.req, context.res, authOptions);
 
-  const requests = await db.trade.findMany({
+  const pendingRequests = await db.trade.findMany({
     where: {
       authorId: session.user?.id,
+      status: TradeStatus.pending,
     },
     include: {
       to: true,
@@ -124,5 +150,37 @@ export const getServerSideProps = async (context: any) => {
       postInQuestion: true,
     },
   });
-  return { props: { posts: JSON.parse(JSON.stringify(requests)) } };
+  const acceptedRequests = await db.trade.findMany({
+    where: {
+      authorId: session.user?.id,
+      status: TradeStatus.accepted,
+    },
+    include: {
+      to: true,
+      from: true,
+      postInQuestion: true,
+    },
+  });
+  const rejectedRequests = await db.trade.findMany({
+    where: {
+      authorId: session.user?.id,
+      status: TradeStatus.rejected,
+    },
+    include: {
+      to: true,
+      from: true,
+      postInQuestion: true,
+    },
+  });
+  return {
+    props: {
+      posts: JSON.parse(
+        JSON.stringify({
+          pendingRequests,
+          acceptedRequests,
+          rejectedRequests,
+        })
+      ),
+    },
+  };
 };
