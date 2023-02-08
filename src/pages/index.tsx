@@ -2,16 +2,14 @@ import Head from "next/head";
 import Image from "next/image";
 import { Inter } from "@next/font/google";
 import styles from "@/styles/Home.module.css";
-import { getSession, signIn, signOut } from "next-auth/react";
+import Link from "next/link";
+import { useSession, signIn, signOut } from "next-auth/react";
 import { FcGoogle } from "react-icons/fc";
 
 const inter = Inter({ subsets: ["latin"] });
 
-interface Props {
-  ext: any;
-}
-
-export default function Home({ ext }: Props) {
+export default function Home() {
+  const { data: session, status } = useSession();
   return (
     <>
       <div
@@ -59,8 +57,19 @@ export default function Home({ ext }: Props) {
         <p className="text-center font-bold text-lg font-mono	">
           The place for trading art pieces.
         </p>{" "}
-        <div className="flex justify-center align-center">
-          {!ext ? (
+        {status === "loading" ? null : status === "authenticated" ? (
+          <div className="space-x-3">
+            <Link href={`/user/${session.user!.id}`}>{session.user!.name}</Link>
+            <span>|</span>
+            <button
+              className="bg-purple-200 px-2 hover:bg-purple-300 rounded-md"
+              onClick={() => signOut()}
+            >
+              Sign Out
+            </button>
+          </div>
+        ) : (
+          <div className="flex justify-center align-center">
             <button
               onClick={() => signIn("google")}
               className={`hover:scale-105 duration-300 mt-6 space-x-2 flex items-center font-md w-max p-2.5 border-2 rounded-lg border-purple-400`}
@@ -68,20 +77,9 @@ export default function Home({ ext }: Props) {
               <FcGoogle className={`w-6 h-6`} />{" "}
               <span>Sign in with Google</span>
             </button>
-          ) : (
-            <></>
-          )}
-        </div>
+          </div>
+        )}
       </div>
     </>
   );
-}
-
-export async function getServerSideProps(context: any) {
-  const session = await getSession(context);
-  return {
-    props: {
-      ext: session,
-    },
-  };
 }
