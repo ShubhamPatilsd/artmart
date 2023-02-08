@@ -10,7 +10,7 @@ module.exports = {
   theme: {
     extend: {
       animation: {
-        "bounce-slow": "bounce 7s linear infinite",
+        "bounce-slow": "bounce 20	s linear infinite",
       },
     },
   },
