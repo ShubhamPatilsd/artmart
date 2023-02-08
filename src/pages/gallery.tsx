@@ -23,9 +23,9 @@ export default function Dashboard({
   const router = useRouter();
 
   return (
-    <div className="min-h-screen bg-slate-200 px-8">
+    <div className="min-h-screen bg-slate-200 w-screen px-4">
       <div className="max-w-5xl min-w-2xl mx-auto py-8">
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid sm:grid-cols-2 grid-cols-1 xl:grid-cols-3 gap-4">
           {posts.map((post, i) => {
             return (
               <Link href={`/artwork/${post.id}`} key={post.id}>
