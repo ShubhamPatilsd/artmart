@@ -41,7 +41,7 @@ const UserPage = ({
                   alt={`${user.name}'s artwork`}
                   src={post.imageUrl}
                   fill
-                  className="object-contain object-center"
+                  className="object-cover object-center"
                 />
               </div>
             );

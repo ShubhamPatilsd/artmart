@@ -11,6 +11,7 @@ export const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
     if (!title || !description || !imageUrl || !category || !preferredTrade) {
       res.status(400).send("missing-fields");
+      return;
     }
     if (session) {
       const user = await db.user.findUnique({
