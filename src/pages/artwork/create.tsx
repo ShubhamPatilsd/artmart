@@ -22,40 +22,49 @@ export default function CreateArtwork() {
 
   return (
     <>
-      <h1 className="text-3xl font-bold underline">Hello artwork!</h1>
-      <h1 className="text-3xl font-bold underline">Hello artwork!</h1>
-      <div>
-        <div>
-          <label
-            htmlFor="title"
-            className="block text-md font-medium text-gray-700"
-          >
-            Title
-          </label>
-          <input
-            type="text"
-            name="title"
-            className="block rounded-md border-2 border-purple-600 px-4 py-2 outline-none  sm:text-sm"
-            placeholder="Ex: Cool unicorn"
-          />
+      <div className="md:py-16 md:px-48 px-32 py-12 min-h-screen bg-slate-200">
+        {/* <div className="flex justify-center align-center"> */}
+        <p className="rotate-45 font-bold text-2xl  rounded-lg  w-fit">✨</p>
+        <p className="font-bold text-4xl p-2 rounded-lg  bg-purple-400 bg-opacity-10 w-fit">
+          Upload your Artwork!
+        </p>
+        {/* </div> */}
+        {/* <div className="flex justify-center align-center"> */}
+        <div className="mt-12">
+          <div>
+            <label
+              htmlFor="title"
+              className="block text-md font-medium text-gray-700"
+            >
+              Title
+            </label>
+            <input
+              type="text"
+              name="title"
+              className="block rounded-md border-2 border-purple-600 px-4 py-2 outline-none  sm:text-sm"
+              placeholder="Ex: Cool unicorn"
+            />
+          </div>
+          <div className="mt-8">
+            <label
+              htmlFor="Description"
+              className="block text-md font-medium text-gray-700"
+            >
+              Description
+            </label>
+            <textarea
+              // type="text"
+              name="description"
+              className="block rounded-md border-2 border-purple-600 px-4 py-2 outline-none  sm:text-sm"
+              placeholder="My cool art piece!"
+            />
+          </div>
+          <div className="mt-4">
+            <input type="file" onChange={handleFileChange} />
+          </div>{" "}
         </div>
-
-        <div>
-          <label
-            htmlFor="Description"
-            className="block text-md font-medium text-gray-700"
-          >
-            Title
-          </label>
-          <textarea
-            // type="text"
-            name="description"
-            className="block rounded-md border-2 border-purple-600 px-4 py-2 outline-none  sm:text-sm"
-            placeholder="My cool art piece!"
-          />
-        </div>
-        <input type="file" onChange={handleFileChange} />
       </div>
+      {/* </div> */}
     </>
   );
 }
