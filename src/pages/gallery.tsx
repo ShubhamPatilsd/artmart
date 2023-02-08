@@ -8,23 +8,28 @@ import { FcGoogle } from "react-icons/fc";
 import { db } from "@/db/db";
 import { Post } from "@/components/Post";
 
-export default function Dashboard({ posts }: { posts: Post[] }) {
+export default function Gallery({ posts }: { posts: Post[] }) {
   return (
-    <div className="grid grid-cols-3 gap-4 p-8">
-      {posts.map((post, i) => {
-        return (
-          <div>
-            <Post
-              coverPhoto={post.imageUrl}
-              authorName={post.author.name}
-              authorPhoto={post.author.image}
-              title={post.title}
-              description={post.description}
-              category={post.category}
-            />
-          </div>
-        );
-      })}
+    <div
+      className={`md:py-24 md:px-36 px-24 py-16 space-y-2 min-h-screen bg-slate-200 flex flex-col items-center`}
+    >
+      <p className="font-bold text-6xl p-2 rounded-lg  w-fit">Gallery</p>
+      <div className="grid grid-cols-3 gap-4 p-8">
+        {posts.map((post, i) => {
+          return (
+            <div>
+              <Post
+                coverPhoto={post.imageUrl}
+                authorName={post.author.name}
+                authorPhoto={post.author.image}
+                title={post.title}
+                description={post.description}
+                category={post.category}
+              />
+            </div>
+          );
+        })}
+      </div>
     </div>
   );
 }

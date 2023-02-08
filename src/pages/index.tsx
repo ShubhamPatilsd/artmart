@@ -59,8 +59,8 @@ export default function Home() {
           The place for trading art pieces.
         </p>
         <Link
-          className="bg-gradient-to-br from-fuchsia-500 via-purple-500 to-indigo-600 px-6 py-2 text-xl font-semibold text-white rounded-md hover:from-pink-400 hover:via-fuchsia-600 hover:to-purple-700"
           href="/artwork/create"
+          className="text-white transition-all duration-500 bg-gradient-to-br to-indigo-600 via-purple-500 from-fuchsia-500 bg-size-200 bg-pos-0 hover:bg-pos-100 text-xl font-semibold rounded-md px-6 py-2"
         >
           Get Started
         </Link>
