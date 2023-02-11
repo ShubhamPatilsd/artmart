@@ -71,8 +71,8 @@ model Post {
   preferredTrade PostType
 
   // Relations
-  author   User   @relation(fields: [userId], references: [id])
-  userId String
+  author   User   @relation(fields: [authorId], references: [id])
+  authorId String
 
   // Timestamps
   createdAt DateTime @default(now())
