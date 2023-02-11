@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { getServerSession } from "next-auth";
 import { authOptions } from "../auth/[...nextauth]";
-import { db } from "../db/db";
+import { db } from "../../../db/db";
 
 export const handle = async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method == "POST") {
