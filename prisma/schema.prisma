@@ -15,6 +15,12 @@ enum PostType {
   sculpture
 }
 
+enum PreferenceType {
+  painting
+  sculpture
+  none
+}
+
 model Account {
   id                String  @id @default(cuid())
   userId            String
@@ -63,12 +69,12 @@ model VerificationToken {
 
 model Post {
   // General attributes
-  id             String   @id @default(cuid())
+  id             String         @id @default(cuid())
   title          String
   description    String
   imageUrl       String
   category       PostType
-  preferredTrade PostType
+  preferredTrade PreferenceType
 
   // Relations
   author   User   @relation(fields: [authorId], references: [id])
