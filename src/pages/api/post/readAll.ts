@@ -4,7 +4,7 @@ import { authOptions } from "../auth/[...nextauth]";
 import { db } from "../../../db/db";
 
 export const handle = async (req: NextApiRequest, res: NextApiResponse) => {
-  if (req.method == "POST") {
+  if (req.method == "GET") {
     const session = await getServerSession(req, res, authOptions);
 
     if (session) {
