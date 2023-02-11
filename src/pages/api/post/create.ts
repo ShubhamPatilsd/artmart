@@ -28,9 +28,13 @@ export const handle = async (req: NextApiRequest, res: NextApiResponse) => {
             imageUrl: imageUrl,
             category: category,
             preferredTrade: preferredTrade,
-            userId: user.id,
+            authorId: user.id,
           },
         });
+
+        if (!post) {
+          return res.status(500).send("internal-server-error");
+        }
 
         return res.status(200).json(post);
       }
