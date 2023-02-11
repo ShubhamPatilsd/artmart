@@ -4,7 +4,7 @@ import Link from "next/link";
 const Navbar = () => {
   const { data: session, status } = useSession();
   return (
-    <nav className="text-lg h-16 bg-purple-100 w-full px-2">
+    <nav className="relative text-lg h-16 bg-white w-full px-2">
       <div className="h-full flex justify-between items-center max-w-5xl mx-auto">
         <div>
           <Link href="/" className="font-bold text-purple-700 text-2xl">
@@ -38,6 +38,7 @@ const Navbar = () => {
           </div>
         )}
       </div>
+      <div className="absolute -bottom-1 left-0 right-0 h-1 bg-gradient-to-r from-fuchsia-500 via-purple-500 to-indigo-600" />
     </nav>
   );
 };

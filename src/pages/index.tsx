@@ -42,11 +42,11 @@ export default function Home() {
         </svg>
       </div>
       <div
-        className={`md:py-24 md:px-36 px-24 py-16 min-h-screen bg-slate-200`}
+        className={`md:py-24 md:px-36 px-24 py-16 space-y-2 min-h-screen bg-slate-200`}
       >
         {/* <p className=" text-6xl text-opzacity-20">uwi</p>t */}
         <div className="text-center align-center text-black text-6xl">🌃</div>
-        <div className="flex justify-center align-center mt-">
+        <div className="flex justify-center align-center">
           <p className="font-bold text-6xl p-2 rounded-lg  bg-purple-400 bg-opacity-10 w-fit">
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-purple-700">
               Art
@@ -56,29 +56,7 @@ export default function Home() {
         </div>
         <p className="text-center font-bold text-lg font-mono	">
           The place for trading art pieces.
-        </p>{" "}
-        {status === "loading" ? null : status === "authenticated" ? (
-          <div className="space-x-3">
-            <Link href={`/user/${session.user!.id}`}>{session.user!.name}</Link>
-            <span>|</span>
-            <button
-              className="bg-purple-200 px-2 hover:bg-purple-300 rounded-md"
-              onClick={() => signOut()}
-            >
-              Sign Out
-            </button>
-          </div>
-        ) : (
-          <div className="flex justify-center align-center">
-            <button
-              onClick={() => signIn("google")}
-              className={`hover:scale-105 duration-300 mt-6 space-x-2 flex items-center font-md w-max p-2.5 border-2 rounded-lg border-purple-400`}
-            >
-              <FcGoogle className={`w-6 h-6`} />{" "}
-              <span>Sign in with Google</span>
-            </button>
-          </div>
-        )}
+        </p>
       </div>
     </>
   );

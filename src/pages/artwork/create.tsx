@@ -1,5 +1,4 @@
 import Head from "next/head";
-import Image from "next/image";
 import { Inter } from "@next/font/google";
 import styles from "@/styles/Home.module.css";
 import { useS3Upload } from "next-s3-upload";
@@ -18,7 +17,9 @@ export default function CreateArtwork() {
   const handleFileChange = async (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
+    if (!event.target.files || event.target.files.length === 0) return;
     let file = event.target.files[0];
+    if (!file.type.startsWith("image/")) return;
     let { url } = await uploadToS3(file);
 
     console.log("Successfully uploaded to S3!", url);
@@ -27,7 +28,6 @@ export default function CreateArtwork() {
 
   return (
     <>
-      <h1 className="text-3xl font-bold underline">Hello artwork!</h1>
       <div className="space-y-4 p-16 max-w-3xl">
         <div className="w-full space-y-1">
           <label

@@ -9,6 +9,12 @@ const nextConfig = {
         port: "",
         pathname: "**",
       },
+      {
+        protocol: "https",
+        hostname: "evergreen-media.s3.us-west-1.amazonaws.com",
+        port: "",
+        pathname: "**",
+      },
     ],
   },
 };
