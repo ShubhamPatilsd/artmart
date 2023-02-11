@@ -5,6 +5,7 @@ import styles from "@/styles/Home.module.css";
 import { useS3Upload } from "next-s3-upload";
 import React, { useState } from "react";
 import { FiUploadCloud } from "react-icons/fi";
+import axios from "axios";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -28,7 +29,7 @@ export default function CreateArtwork() {
     <>
       <h1 className="text-3xl font-bold underline">Hello artwork!</h1>
       <div className="space-y-4 p-16 max-w-3xl">
-        <div className="w-full">
+        <div className="w-full space-y-1">
           <label
             htmlFor="title"
             className="block text-md font-bold text-gray-700"
@@ -44,9 +45,7 @@ export default function CreateArtwork() {
           />
         </div>
 
-        {title}
-
-        <div className="w-full">
+        <div className="w-full space-y-1">
           <label
             htmlFor="description"
             className="block text-md font-bold text-gray-700"
@@ -55,27 +54,55 @@ export default function CreateArtwork() {
           </label>
           <textarea
             // type="text"
+            onChange={(e) => {
+              setDescription(e.target.value);
+            }}
             name="description"
             className="block w-full rounded-md border-2 border-purple-600 px-4 py-2 outline-none  sm:text-sm"
             placeholder="My cool art piece!"
           />
         </div>
-        <div className="relative  rounded-md  p-[4px] bg-gradient-to-r from-purple-400 to-purple-700">
-          <div className="bg-white p-16 rounded-md">
+        <div className="relative rounded-lg  p-[2px] bg-gradient-to-r from-purple-400 to-purple-700">
+          <div className="bg-white p-16 rounded-md space-y-2">
             {/* <Ociton */}
             <input
               className="w-full h-full absolute top-0 left-0 rounded-md cursor-pointer opacity-0"
               type="file"
+              accept="image/*"
               onChange={handleFileChange}
             />
             {/* <p className="font-bold text-purple-600"> Upload Image</p> */}
-            <FiUploadCloud className="bg-gradient-to-r from-purple-400 to-purple-700" />
+            <FiUploadCloud className="text-purple-700 mx-auto" size={50} />
+            <p className="text-sm font-mono text-gray-500 text-center ">
+              {previewUrl
+                ? "Replace with another picture of your art"
+                : "Upload a picture of your art"}
+            </p>
           </div>
         </div>
         <img src={previewUrl} />
 
         <button
-          onClick={() => {}}
+          onClick={() => {
+            console.log({
+              title,
+              description,
+              imageUrl: previewUrl,
+              category: "sculpture",
+              preferredTrade: "painting",
+            });
+            axios({
+              method: "POST",
+              url: "/api/post/create",
+              data: {
+                title,
+                description,
+                imageUrl: previewUrl,
+                category: "sculpture",
+                preferredTrade: "painting",
+              },
+            });
+          }}
           className="rounded-md px-6 py-4 font-bold bg-gradient-to-r from-purple-400 to-purple-700 text-white text-lg w-full"
         >
           Next
