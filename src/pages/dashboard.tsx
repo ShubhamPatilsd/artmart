@@ -10,7 +10,7 @@ import { Post } from "@/components/Post";
 
 export default function Dashboard({ posts }: { posts: Post[] }) {
   return (
-    <div>
+    <div className="grid grid-cols-3 gap-4 p-8">
       {posts.map((post, i) => {
         return (
           <div>
