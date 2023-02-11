@@ -12,8 +12,13 @@ const Navbar = () => {
           </Link>
         </div>
         {status === "loading" ? null : status === "authenticated" ? (
-          <div className="space-x-3">
-            <Link href={`/user/${session.user!.id}`}>{session.user!.name}</Link>
+          <div className="flex items-stretch space-x-3">
+            <Link
+              className=" bg-purple-200 px-2 hover:bg-purple-300 rounded-md"
+              href={`/user/${session.user!.id}`}
+            >
+              {session.user!.name}
+            </Link>
             <span>|</span>
             <button
               className="bg-purple-200 px-2 hover:bg-purple-300 rounded-md"
