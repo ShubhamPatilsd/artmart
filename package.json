@@ -17,6 +17,7 @@
     "@types/react-dom": "18.0.10",
     "next": "13.1.6",
     "next-auth": "^4.19.2",
+    "next-s3-upload": "^0.2.9",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "typescript": "4.9.5"
