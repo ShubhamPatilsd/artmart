@@ -17,9 +17,13 @@
     "@types/react-dom": "18.0.10",
     "next": "13.1.6",
     "next-auth": "^4.19.2",
+<<<<<<< HEAD
+=======
     "next-s3-upload": "^0.2.9",
+>>>>>>> 6ebbd6e59091da25c558ae795b0fe88daa3204e1
     "react": "18.2.0",
     "react-dom": "18.2.0",
+    "react-icons": "^4.7.1",
     "typescript": "4.9.5"
   },
   "devDependencies": {
