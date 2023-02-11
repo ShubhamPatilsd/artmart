@@ -32,6 +32,10 @@ export const handle = async (req: NextApiRequest, res: NextApiResponse) => {
           },
         });
 
+        if (!post) {
+          return res.status(500).send("internal-server-error");
+        }
+
         return res.status(200).json(post);
       }
     } else {
