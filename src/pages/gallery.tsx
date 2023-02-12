@@ -9,6 +9,7 @@ import { db } from "@/db/db";
 import { Post } from "@/components/Post";
 import { Post as PostType } from "@prisma/client";
 import { useRouter } from "next/router";
+import Gallery from "@/components/Gallery";
 
 export default function Dashboard({
   posts,
@@ -20,28 +21,9 @@ export default function Dashboard({
     };
   })[];
 }) {
-  const router = useRouter();
-
   return (
     <div className="min-h-screen bg-slate-200 w-screen px-4">
-      <div className="max-w-5xl min-w-2xl mx-auto py-8">
-        <div className="grid sm:grid-cols-2 grid-cols-1 xl:grid-cols-3 gap-4">
-          {posts.map((post, i) => {
-            return (
-              <Link href={`/artwork/${post.id}`} key={post.id}>
-                <Post
-                  coverPhoto={post.imageUrl}
-                  authorName={post.author.name}
-                  authorPhoto={post.author.image}
-                  title={post.title}
-                  description={post.description}
-                  category={post.category}
-                />
-              </Link>
-            );
-          })}
-        </div>
-      </div>
+      <Gallery posts={posts} />
     </div>
   );
 }

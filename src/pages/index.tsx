@@ -5,10 +5,22 @@ import styles from "@/styles/Home.module.css";
 import Link from "next/link";
 import { useSession, signIn, signOut } from "next-auth/react";
 import { FcGoogle } from "react-icons/fc";
+import Gallery from "@/components/Gallery";
+import { Post } from "@prisma/client";
+import { db } from "@/db/db";
 
 const inter = Inter({ subsets: ["latin"] });
 
-export default function Home() {
+export default function Home({
+  posts,
+}: {
+  posts: (Post & {
+    author: {
+      name: string;
+      image: string;
+    };
+  })[];
+}) {
   const { data: session, status } = useSession();
   return (
     <>
@@ -72,7 +84,25 @@ export default function Home() {
             View Gallery
           </Link>
         </div>
+
+        <Gallery posts={posts} />
       </div>
     </>
   );
 }
+
+export const getServerSideProps = async () => {
+  const posts = await db.post.findMany({
+    where: {},
+    include: {
+      author: {
+        select: {
+          image: true,
+          name: true,
+          email: true,
+        },
+      },
+    },
+  });
+  return { props: { posts: JSON.parse(JSON.stringify(posts)) } };
+};
