@@ -1,6 +1,10 @@
+import { db } from "@/db/db";
+import { authOptions } from "@/pages/api/auth/[...nextauth]";
+import { getServerSession } from "next-auth";
 import { useSession, signIn, signOut } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { HiOutlinePencilAlt, HiInbox, HiLogout, HiUser } from "react-icons/hi";
 
 const Navbar = () => {
   const { data: session, status } = useSession();
@@ -16,21 +20,45 @@ const Navbar = () => {
         </div>
         {status === "loading" ? null : status === "authenticated" ? (
           <div className="flex items-stretch space-x-3 text-sm">
-            <button onClick={() => router.push("/artwork/create")}>
-              Create a listing
+            <button
+              // className="bg-purple-200 rounded-full hover:bg-purple-300 p-2"
+              onClick={() => router.push("/artwork/create")}
+            >
+              <HiOutlinePencilAlt
+                size={35}
+                className="bg-purple-200 hover:bg-purple-300 p-2 rounded-full"
+              />
+            </button>
+
+            <button
+              // className="bg-purple-200 rounded-full hover:bg-purple-300 p-2"
+              onClick={() => router.push("/inbox")}
+            >
+              <HiInbox
+                size={35}
+                className="bg-purple-200 hover:bg-purple-300 p-2 rounded-full"
+              />
             </button>
             <Link
-              className=" bg-purple-200 px-2 hover:bg-purple-300 rounded-md"
+              // className=" bg-purple-200 px-2 hover:bg-purple-300 rounded-md"
               href={`/user/${session.user!.id}`}
             >
-              {session.user!.name}
+              <HiUser
+                size={35}
+                className="bg-purple-200 hover:bg-purple-300 p-2 rounded-full"
+              >
+                <p>{session.user.name}</p>
+              </HiUser>
             </Link>
 
             <button
-              className="bg-purple-200 px-2 hover:bg-purple-300 rounded-md"
+              className="bg-purple-200 hover:bg-purple-300 rounded-full"
               onClick={() => signOut()}
             >
-              Sign Out
+              <HiLogout
+                size={35}
+                className="bg-purple-200 hover:bg-purple-300 p-2 rounded-full"
+              />
             </button>
           </div>
         ) : (
