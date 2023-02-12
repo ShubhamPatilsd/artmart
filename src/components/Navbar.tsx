@@ -1,8 +1,11 @@
 import { useSession, signIn, signOut } from "next-auth/react";
 import Link from "next/link";
+import { useRouter } from "next/router";
 
 const Navbar = () => {
   const { data: session, status } = useSession();
+  const router = useRouter();
+
   return (
     <nav className="relative text-lg h-16 bg-white w-full px-2">
       <div className="h-full flex justify-between items-center max-w-5xl mx-auto">
@@ -12,14 +15,17 @@ const Navbar = () => {
           </Link>
         </div>
         {status === "loading" ? null : status === "authenticated" ? (
-          <div className="flex items-stretch space-x-3">
+          <div className="flex items-stretch space-x-3 text-sm">
+            <button onClick={() => router.push("/artwork/create")}>
+              Create a listing
+            </button>
             <Link
               className=" bg-purple-200 px-2 hover:bg-purple-300 rounded-md"
               href={`/user/${session.user!.id}`}
             >
               {session.user!.name}
             </Link>
-            <span>|</span>
+
             <button
               className="bg-purple-200 px-2 hover:bg-purple-300 rounded-md"
               onClick={() => signOut()}
@@ -30,7 +36,7 @@ const Navbar = () => {
         ) : (
           <div>
             <button
-              className="bg-purple-200 px-2 hover:bg-purple-300 rounded-md"
+              className="bg-purple-200 px-2 hover:bg-purple-300 rounded-md text-sm"
               onClick={() => signIn("google")}
             >
               Sign In
