@@ -43,7 +43,7 @@ const Navbar = () => {
 
             <button
               // className="bg-purple-200 rounded-full hover:bg-purple-300 p-2"
-              onClick={() => router.push("/inbox")}
+              onClick={() => router.push("/outbox")}
             >
               <MdOutlineOutbox
                 size={35}
