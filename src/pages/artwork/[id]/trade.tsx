@@ -26,7 +26,7 @@ const Trade = ({ individualArtwork }: { individualArtwork: Post }) => {
     setUploading(false);
   };
 
-  const submitArt = async () => {
+  const submitTrade = async () => {
     if (!previewUrl) {
       return;
     }
@@ -84,7 +84,7 @@ const Trade = ({ individualArtwork }: { individualArtwork: Post }) => {
       <img src={previewUrl} />
       <button
         disabled={!previewUrl}
-        onClick={() => submitArt()}
+        onClick={() => submitTrade()}
         className="disabled:saturate-50 disabled:cursor-not-allowed rounded-md px-6 py-3.5 font-bold bg-gradient-to-r from-fuchsia-500 via-purple-500 to-indigo-600 enabled:hover:from-pink-400 enabled:hover:via-fuchsia-600 enabled:hover:to-purple-700 text-white text-lg w-full"
       >
         Request Trade

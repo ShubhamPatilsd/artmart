@@ -28,7 +28,8 @@ export const handler = async (req: NextApiRequest, res: NextApiResponse) => {
             id: tradeId,
           },
           data: {
-            accepted: true,
+            accepted: false,
+            status: "rejected",
           },
         });
 
