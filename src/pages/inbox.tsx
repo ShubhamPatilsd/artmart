@@ -30,15 +30,13 @@ const List = ({
   const router = useRouter();
   return (
     <div className="flex justify-center">
-      <div className="w-full">
+      <div className="w-full space-y-2">
         {posts.map((post, i) => {
-          const { getCollapseProps, getToggleProps, isExpanded } =
-            useCollapse();
           return (
             <div
               className={`${
                 i !== 0 && "border-t"
-              } hover:shadow-md relative px-6 py-4  justify-between cursor-pointer border-purple-300 shadow-purple-200`}
+              } relative px-6 py-4  justify-between cursor-pointer border-2 rounded-md hover:bg-slate-100`}
             >
               <div className="flex items-center justify-between">
                 <p className="font-bold font-mono text-gray-600 text-sm text-left">
@@ -48,7 +46,7 @@ const List = ({
                 <div className="flex rounded-md border">
                   {/* <button> */}
                   <HiOutlineBadgeCheck
-                    className="p-2 hover:bg-slate-100 hover:text-purple-700 rounded-l-md"
+                    className="p-2 hover:bg-emerald-100 hover:text-emerald-700 rounded-l-md"
                     size={35}
                     onClick={async () => {
                       await fetch("/api/trade/accept", {
@@ -65,7 +63,7 @@ const List = ({
                   />
 
                   <HiX
-                    className="p-2 hover:bg-slate-100 hover:text-red-700 rounded-r-md border-l"
+                    className="p-2 hover:bg-red-100 hover:text-red-700 rounded-r-md border-l"
                     size={35}
                     onClick={async () => {
                       await fetch("/api/trade/decline", {
@@ -83,26 +81,10 @@ const List = ({
                   {/* </button> */}
                 </div>
               </div>
-              <button
-                className="mt-2 flex space-x-1 items-center"
-                {...getToggleProps()}
-              >
-                {" "}
-                <VscTriangleRight
-                  className={`${isExpanded && "rotate-90"} text-gray-600`}
-                  size={12}
-                />
-                <p className="text-xs text-gray-600 mb-1">Expand</p>
-              </button>
-
-              {isExpanded}
-              <p {...getCollapseProps()} className="">
-                {" "}
-                <img
-                  src={post.imageUrl}
-                  className="w-full max-w-xl h-auto rounded-md"
-                />
-              </p>
+              <img
+                src={post.imageUrl}
+                className="w-full max-w-sm h-auto rounded-md"
+              />
             </div>
           );
         })}
@@ -133,15 +115,23 @@ export default function Inbox({
   };
 }) {
   return (
-    <div className="w-[75%] mx-auto">
-      <h2>Pending</h2>
-      <List posts={pendingRequests} />
+    <div className="bg-slate-200 min-h-screen">
+      <div className="max-w-4xl mx-auto py-6 space-y-6">
+        <div className="bg-white py-4 px-4 rounded-md">
+          <h2 className="text-2xl font-bold">Pending</h2>
+          <List posts={pendingRequests} />
+        </div>
 
-      <h2>Accepted</h2>
-      <List posts={acceptedRequests} />
+        <div className="bg-white py-4 px-4 rounded-md">
+          <h2 className="text-2xl font-bold">Accepted</h2>
+          <List posts={acceptedRequests} />
+        </div>
 
-      <h2>Rejected</h2>
-      <List posts={rejectedRequests} />
+        <div className="bg-white py-4 px-4 rounded-md">
+          <h2 className="text-2xl font-bold">Rejected</h2>
+          <List posts={rejectedRequests} />
+        </div>
+      </div>
     </div>
   );
 }
