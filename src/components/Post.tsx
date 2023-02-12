@@ -21,7 +21,7 @@ export const Post: React.FC<PostProps> = ({
         "group relative hover:bg-opacity-40 hover:border-transparent hover:shadow-lg duration-100 rounded-md border border-gray-300"
       }
     >
-      {/* TODO: change this to nextjs image */}
+      {/* TODO: change thifs to nextjs image */}
       <div className="h-30 md:h-36 lg:h-48 rounded-lg">
         <img
           src={coverPhoto}
