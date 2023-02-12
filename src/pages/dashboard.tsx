@@ -6,8 +6,9 @@ import Link from "next/link";
 import { useSession, signIn, signOut } from "next-auth/react";
 import { FcGoogle } from "react-icons/fc";
 import { db } from "@/db/db";
-import { Post } from "@/components/Post";
+import { Post as PostCard } from "@/components/Post";
 import { useRouter } from "next/router";
+import { Post } from "../types/Post";
 
 export default function Dashboard({ posts }: { posts: Post[] }) {
   const router = useRouter();
@@ -17,7 +18,7 @@ export default function Dashboard({ posts }: { posts: Post[] }) {
       {posts.map((post, i) => {
         return (
           <div key={post.id}>
-            <Post
+            <PostCard
               coverPhoto={post.imageUrl}
               authorName={post.author.name}
               authorPhoto={post.author.image}
@@ -31,24 +32,6 @@ export default function Dashboard({ posts }: { posts: Post[] }) {
       })}
     </div>
   );
-}
-
-interface Post {
-  id: string;
-  title: string;
-  description: string;
-  imageUrl: string;
-  category: string;
-  preferredTrade: string;
-  authorId: string;
-  createdAt: Date;
-  updatedAt: Date;
-  author: Author;
-}
-
-interface Author {
-  image: string;
-  name: string;
 }
 
 export const getServerSideProps = async () => {
