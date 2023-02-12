@@ -25,7 +25,7 @@ export const Post: React.FC<PostProps> = ({
       <div className="h-30 md:h-36 lg:h-48 rounded-lg flex justify-center">
         <img src={coverPhoto} className="h-full w-auto rounded-t-lg" />
       </div>
-      <div className="pt-4 pb-8">
+      <div className="py-4">
         <div className="mb-3">
           <span className="bg-purple-100 px-2 py-1 text-purple-700 font-medium tracking-wider lowercase rounded-md text-xs">
             {category}
