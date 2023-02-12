@@ -13,22 +13,25 @@ export default function Dashboard({ posts }: { posts: Post[] }) {
   const router = useRouter();
 
   return (
-    <div className="grid grid-cols-3 gap-4 p-8">
-      {posts.map((post, i) => {
-        return (
-          <div key={post.id}>
-            <Post
-              coverPhoto={post.imageUrl}
-              authorName={post.author.name}
-              authorPhoto={post.author.image}
-              title={post.title}
-              description={post.description}
-              category={post.category}
-              onClick={() => router.push(`/artwork/${post.id}`)}
-            />
-          </div>
-        );
-      })}
+    <div className="bg-slate-200 px-8">
+      <div className="max-w-5xl mx-auto py-8">
+        <div className="grid grid-cols-3 gap-4">
+          {posts.map((post, i) => {
+            return (
+              <Link href={`/artwork/${post.id}`} key={post.id}>
+                <Post
+                  coverPhoto={post.imageUrl}
+                  authorName={post.author.name}
+                  authorPhoto={post.author.image}
+                  title={post.title}
+                  description={post.description}
+                  category={post.category}
+                />
+              </Link>
+            );
+          })}
+        </div>
+      </div>
     </div>
   );
 }
@@ -63,6 +66,5 @@ export const getServerSideProps = async () => {
       },
     },
   });
-  console.log(JSON.stringify(posts));
   return { props: { posts: JSON.parse(JSON.stringify(posts)) } };
 };
