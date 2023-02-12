@@ -118,17 +118,17 @@ export default function Inbox({
     <div className="bg-slate-200 min-h-screen">
       <div className="max-w-4xl mx-auto py-6 space-y-6">
         <div className="bg-white py-4 px-4 rounded-md">
-          <h2 className="text-2xl font-bold">Pending</h2>
+          <h2 className="text-2xl font-bold mb-2">Pending</h2>
           <List posts={pendingRequests} />
         </div>
 
         <div className="bg-white py-4 px-4 rounded-md">
-          <h2 className="text-2xl font-bold">Accepted</h2>
+          <h2 className="text-2xl font-bold mb-2">Accepted</h2>
           <List posts={acceptedRequests} />
         </div>
 
         <div className="bg-white py-4 px-4 rounded-md">
-          <h2 className="text-2xl font-bold">Rejected</h2>
+          <h2 className="text-2xl font-bold mb-2">Rejected</h2>
           <List posts={rejectedRequests} />
         </div>
       </div>

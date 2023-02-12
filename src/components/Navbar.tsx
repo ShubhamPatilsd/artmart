@@ -5,6 +5,7 @@ import { useSession, signIn, signOut } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { HiOutlinePencilAlt, HiInbox, HiLogout, HiUser } from "react-icons/hi";
+import { MdOutlineOutbox } from "react-icons/md";
 
 const Navbar = () => {
   const { data: session, status } = useSession();
@@ -35,6 +36,16 @@ const Navbar = () => {
               onClick={() => router.push("/inbox")}
             >
               <HiInbox
+                size={35}
+                className="bg-purple-200 hover:bg-purple-300 p-2 rounded-full"
+              />
+            </button>
+
+            <button
+              // className="bg-purple-200 rounded-full hover:bg-purple-300 p-2"
+              onClick={() => router.push("/inbox")}
+            >
+              <MdOutlineOutbox
                 size={35}
                 className="bg-purple-200 hover:bg-purple-300 p-2 rounded-full"
               />

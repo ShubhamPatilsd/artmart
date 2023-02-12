@@ -43,7 +43,7 @@ export default function Home() {
         </svg>
       </div>
       <div
-        className={`md:py-24 md:px-36 px-24 py-16 space-y-2 min-h-screen bg-slate-200 flex flex-col items-center`}
+        className={`md:py-24 md:px-36 px-24 py-16 space-y-4 min-h-screen bg-slate-200 flex flex-col items-center`}
       >
         {/* <p className=" text-6xl text-opzacity-20">uwi</p>t */}
         <div className="text-center align-center text-black text-6xl">🌃</div>
@@ -55,10 +55,10 @@ export default function Home() {
             Mart
           </p>
         </div>
-        <p className="text-center font-bold text-lg font-mono	">
-          The place for trading art pieces.
+        <p className="text-center font-bold text-lg font-mono">
+          Trade your art. Get back your sense of community.
         </p>
-        <div className="space-x-2">
+        <div className="space-x-2 mt-4">
           <Link
             href="/artwork/create"
             className="text-white transition-all duration-500 bg-gradient-to-br to-indigo-600 via-purple-500 from-fuchsia-500 bg-size-200 bg-pos-0 hover:bg-pos-100 text-xl font-semibold rounded-md px-6 py-2"
