@@ -6,15 +6,19 @@ import Link from "next/link";
 import { useSession, signIn, signOut } from "next-auth/react";
 import { FcGoogle } from "react-icons/fc";
 import { db } from "@/db/db";
-import { Post } from "@/components/Post";
+import { Post as PostCard } from "@/components/Post";
+import { useRouter } from "next/router";
+import { Post } from "../types/Post";
 
 export default function Dashboard({ posts }: { posts: Post[] }) {
+  const router = useRouter();
+
   return (
     <div className="grid grid-cols-3 gap-4 p-8">
       {posts.map((post, i) => {
         return (
-          <div>
-            <Post
+          <div key={post.id}>
+            <PostCard
               coverPhoto={post.imageUrl}
               authorName={post.author.name}
               authorPhoto={post.author.image}
@@ -22,31 +26,13 @@ export default function Dashboard({ posts }: { posts: Post[] }) {
               description={post.description}
               category={post.category}
               authorEmail={post.author.email}
+              onClick={() => router.push(`/artwork/${post.id}`)}
             />
           </div>
         );
       })}
     </div>
   );
-}
-
-interface Post {
-  id: string;
-  title: string;
-  description: string;
-  imageUrl: string;
-  category: string;
-  preferredTrade: string;
-  authorId: string;
-  createdAt: Date;
-  updatedAt: Date;
-  author: Author;
-}
-
-interface Author {
-  image: string;
-  name: string;
-  email: string;
 }
 
 export const getServerSideProps = async () => {

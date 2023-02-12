@@ -18,6 +18,7 @@ export default function Home() {
       >
         <svg
           width="1360"
+          className="animate-bounce-slow"
           height="578"
           viewBox="0 0 1360 578"
           xmlns="http://www.w3.org/2000/svg"

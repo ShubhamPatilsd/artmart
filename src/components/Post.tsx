@@ -6,6 +6,7 @@ interface PostProps {
   title: string;
   description: string;
   category: string;
+  onClick: any;
 }
 
 export const Post: React.FC<PostProps> = ({
@@ -16,13 +17,10 @@ export const Post: React.FC<PostProps> = ({
   title,
   description,
   category,
+  onClick,
 }) => {
   return (
-    <div
-      className={
-        "rounded-lg border-2 border-purple-200 shadow-lg shadow-purple-100"
-      }
-    >
+    <div className={"rounded-md border border-gray-300 p-4"} onClick={onClick}>
       {/* TODO: change this to nextjs image */}
       <div className="h-30 md:h-36 lg:h-48 p-2 rounded-lg flex justify-center">
         <img
