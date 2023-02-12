@@ -74,7 +74,7 @@ export default function CreateArtwork() {
       <div
         className={`mx-auto max-w-3xl md:py-24 md:px-36 px-24 py-16 space-y-2 min-h-screen`}
       >
-        <p className="text-4xl font-bold">Upload your artwork!</p>
+        <p className="text-4xl font-bold mb-8">Upload your artwork!</p>
         <div className="w-full space-y-1">
           <label htmlFor="title" className="block font-bold text-gray-700">
             Title

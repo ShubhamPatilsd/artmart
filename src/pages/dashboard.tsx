@@ -7,8 +7,11 @@ import { useSession, signIn, signOut } from "next-auth/react";
 import { FcGoogle } from "react-icons/fc";
 import { db } from "@/db/db";
 import { Post } from "@/components/Post";
+import { useRouter } from "next/router";
 
 export default function Dashboard({ posts }: { posts: Post[] }) {
+  const router = useRouter();
+
   return (
     <div className="grid grid-cols-3 gap-4 p-8">
       {posts.map((post, i) => {
@@ -21,6 +24,7 @@ export default function Dashboard({ posts }: { posts: Post[] }) {
               title={post.title}
               description={post.description}
               category={post.category}
+              onClick={() => router.push(`/artwork/${post.id}`)}
             />
           </div>
         );
