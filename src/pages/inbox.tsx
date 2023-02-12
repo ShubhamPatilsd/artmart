@@ -43,23 +43,27 @@ const dummyData = [
   },
 ];
 
-export default function Inbox({ posts }: { posts: Post[] }) {
+export default function Inbox({ posts }: { posts: any[] }) {
   const router = useRouter();
 
   return (
     <div className="flex justify-center">
-      <div className="w-[75%]">
-        {dummyData.map((post, i) => {
+      <div className="w-[75%] pt-2">
+        {posts.map((post, i) => {
           const { getCollapseProps, getToggleProps, isExpanded } =
             useCollapse();
           return (
-            <div className="border-t hover:shadow-md relative px-6 py-4  justify-between cursor-pointer border-purple-300 shadow-purple-200">
+            <div
+              className={`${
+                i !== 0 && "border-t"
+              } hover:shadow-md relative px-6 py-4  justify-between cursor-pointer border-purple-300 shadow-purple-200`}
+            >
               <div className="flex items-center justify-between">
                 <p className="font-bold font-mono text-gray-600 text-sm text-left">
-                  {post.subject}
+                  New trade request for {post.postInQuestion.title}
                 </p>
 
-                <div className="flex">
+                <div className="flex rounded-md border">
                   {/* <button> */}
                   <HiOutlineBadgeCheck
                     className="p-2 hover:bg-slate-100 hover:text-purple-700 rounded-l-md"
@@ -112,7 +116,7 @@ export const getServerSideProps = async (context: any) => {
 
   const requests = await db.trade.findMany({
     where: {
-      authorId: session.user?.email,
+      authorId: session.user?.id,
     },
     include: {
       to: true,
