@@ -63,7 +63,7 @@ export default function CreateArtwork() {
       },
     });
 
-    router.push("/dashboard");
+    router.push("/gallery");
     console.log("clearing....");
     setTitle("");
     setDescription("");
