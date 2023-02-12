@@ -59,10 +59,10 @@ export default function Home() {
           The place for trading art pieces.
         </p>
         <Link
-          href="/artwork/create"
+          href={session ? "/gallery" : "/artwork/create"}
           className="text-white transition-all duration-500 bg-gradient-to-br to-indigo-600 via-purple-500 from-fuchsia-500 bg-size-200 bg-pos-0 hover:bg-pos-100 text-xl font-semibold rounded-md px-6 py-2"
         >
-          Get Started
+          {session ? "Visit Gallery" : "Get Started"}
         </Link>
       </div>
     </>
