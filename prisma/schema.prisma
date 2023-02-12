@@ -15,6 +15,12 @@ enum PostType {
   sculpture
 }
 
+enum TradeStatus {
+  pending
+  accepted
+  rejected
+}
+
 enum PreferenceType {
   painting
   sculpture
@@ -62,9 +68,10 @@ model User {
 }
 
 model Trade {
-  id       String @id @default(cuid())
+  id       String  @id @default(cuid())
+  accepted Boolean @default(false)
   // Relations
-  to       User   @relation("incoming", fields: [authorId], references: [id])
+  to       User    @relation("incoming", fields: [authorId], references: [id])
   authorId String
 
   from        User   @relation(name: "requests", fields: [requesterId], references: [id])
@@ -72,6 +79,7 @@ model Trade {
 
   postInQuestion Post   @relation(fields: [postId], references: [id])
   postId         String
+  status TradeStatus
 }
 
 model VerificationToken {
