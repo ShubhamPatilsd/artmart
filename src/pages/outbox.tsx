@@ -40,68 +40,26 @@ const List = ({
                 i !== 0 && "border-t"
               } relative px-6 py-4  justify-between cursor-pointer border-2 rounded-md hover:bg-slate-100`}
             >
-              <div className="flex items-center justify-between">
-                <p className="font-bold text-xl text-gray-600 text-left">
-                  {post.postInQuestion.title}
-                </p>
-
-                <div className="flex rounded-md border">
-                  {/* <button> */}
-                  <HiOutlineBadgeCheck
-                    className="p-2 hover:bg-emerald-100 hover:text-emerald-700 rounded-l-md"
-                    size={35}
-                    onClick={async () => {
-                      await fetch("/api/trade/accept", {
-                        method: "POST",
-                        headers: {
-                          "Content-Type": "application/json",
-                        },
-                        body: JSON.stringify({
-                          tradeId: post.id,
-                        }),
-                      });
-                      router.replace(router.asPath);
-                    }}
-                  />
-
-                  <HiX
-                    className="p-2 hover:bg-red-100 hover:text-red-700 rounded-r-md border-l"
-                    size={35}
-                    onClick={async () => {
-                      await fetch("/api/trade/decline", {
-                        method: "POST",
-                        headers: {
-                          "Content-Type": "application/json",
-                        },
-                        body: JSON.stringify({
-                          tradeId: post.id,
-                        }),
-                      });
-                      router.replace(router.asPath);
-                    }}
-                  />
-                  {/* </button> */}
-                </div>
-              </div>
+              <p className="font-bold  text-gray-600 text-xl text-left">
+                {post.postInQuestion.title}
+              </p>
+              <p className="text-sm">By {post.to.name}</p>
+              {showEmail ? (
+                <a className="text-purple-600" href={`mailto:${post.to.email}`}>
+                  {post.to.email}
+                </a>
+              ) : null}
 
               <div className="mt-4">
-                <div className="font-light">{post.from.name}'s Art</div>
-                {showEmail ? (
-                  <a
-                    className="text-purple-600"
-                    href={`mailto:${post.from.email}`}
-                  >
-                    {post.from.email}
-                  </a>
-                ) : null}
+                <span className="font-light">Their Art</span>
                 <img
-                  src={post.imageUrl}
+                  src={post.postInQuestion.imageUrl}
                   className="w-full max-w-xs h-auto rounded-md"
                 />
                 <div className="h-12" />
                 <span className="font-light">Your Art</span>
                 <img
-                  src={post.postInQuestion.imageUrl}
+                  src={post.imageUrl}
                   className="w-full max-w-xs h-auto rounded-md"
                 />
               </div>
@@ -138,7 +96,7 @@ export default function Inbox({
     <div className="bg-slate-200 min-h-screen">
       <div className="max-w-4xl mx-auto py-6 space-y-6">
         <div className="bg-white py-4 px-4 rounded-md">
-          <h2 className="text-2xl font-bold mb-2">Pending</h2>
+          <h2 className="text-2xl font-bold">Pending</h2>
           <List posts={pendingRequests} />
         </div>
 
@@ -148,7 +106,7 @@ export default function Inbox({
         </div>
 
         <div className="bg-white py-4 px-4 rounded-md">
-          <h2 className="text-2xl font-bold mb-2">Rejected</h2>
+          <h2 className="text-2xl font-bold">Rejected</h2>
           <List posts={rejectedRequests} />
         </div>
       </div>
@@ -161,7 +119,7 @@ export const getServerSideProps = async (context: any) => {
 
   const pendingRequests = await db.trade.findMany({
     where: {
-      authorId: session.user?.id,
+      requesterId: session.user?.id,
       status: TradeStatus.pending,
     },
     include: {
@@ -172,7 +130,7 @@ export const getServerSideProps = async (context: any) => {
   });
   const acceptedRequests = await db.trade.findMany({
     where: {
-      authorId: session.user?.id,
+      requesterId: session.user?.id,
       status: TradeStatus.accepted,
     },
     include: {
@@ -183,7 +141,7 @@ export const getServerSideProps = async (context: any) => {
   });
   const rejectedRequests = await db.trade.findMany({
     where: {
-      authorId: session.user?.id,
+      requesterId: session.user?.id,
       status: TradeStatus.rejected,
     },
     include: {
