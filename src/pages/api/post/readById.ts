@@ -16,6 +16,9 @@ export const handle = async (req: NextApiRequest, res: NextApiResponse) => {
         where: {
           id: postId,
         },
+        include: {
+          Trade: true,
+        },
       });
 
       if (!post) {

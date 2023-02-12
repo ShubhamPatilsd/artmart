@@ -62,9 +62,10 @@ model User {
 }
 
 model Trade {
-  id       String @id @default(cuid())
+  id       String  @id @default(cuid())
+  accepted Boolean
   // Relations
-  to       User   @relation("incoming", fields: [authorId], references: [id])
+  to       User    @relation("incoming", fields: [authorId], references: [id])
   authorId String
 
   from        User   @relation(name: "requests", fields: [requesterId], references: [id])

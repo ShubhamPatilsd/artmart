@@ -9,6 +9,7 @@ import React, {
   useState,
 } from "react";
 import { FiUploadCloud } from "react-icons/fi";
+import { useRouter } from "next/router";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -20,6 +21,7 @@ export default function CreateArtwork() {
   const [category, setCategory] = useState<string>();
   const [preference, setPreference] = useState<string>();
   const [uploading, setUploading] = useState(false);
+  const router = useRouter();
 
   const handleFileChange = async (
     event: React.ChangeEvent<HTMLInputElement>
@@ -60,6 +62,8 @@ export default function CreateArtwork() {
         "Content-Type": "application/json",
       },
     });
+
+    router.push("/dashboard");
     console.log("clearing....");
     setTitle("");
     setDescription("");
