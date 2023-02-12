@@ -75,7 +75,7 @@ const Navbar = () => {
         ) : (
           <div>
             <button
-              className="bg-purple-200 px-2 hover:bg-purple-300 rounded-md text-sm"
+              className="bg-purple-700 px-6 py-2 text-white text-center font-bold  hover:bg-purple-500 rounded-md text-sm"
               onClick={() => signIn("google")}
             >
               Sign In
