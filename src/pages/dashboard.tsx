@@ -21,6 +21,7 @@ export default function Dashboard({ posts }: { posts: Post[] }) {
               title={post.title}
               description={post.description}
               category={post.category}
+              authorEmail={post.author.email}
             />
           </div>
         );
@@ -45,6 +46,7 @@ interface Post {
 interface Author {
   image: string;
   name: string;
+  email: string;
 }
 
 export const getServerSideProps = async () => {
@@ -55,6 +57,7 @@ export const getServerSideProps = async () => {
         select: {
           image: true,
           name: true,
+          email: true,
         },
       },
     },
