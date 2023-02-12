@@ -13,7 +13,7 @@ export default function Dashboard({ posts }: { posts: Post[] }) {
     <div className="grid grid-cols-3 gap-4 p-8">
       {posts.map((post, i) => {
         return (
-          <div>
+          <div key={post.id}>
             <Post
               coverPhoto={post.imageUrl}
               authorName={post.author.name}
