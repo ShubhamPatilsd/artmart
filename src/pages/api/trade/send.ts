@@ -2,10 +2,11 @@ import { NextApiRequest, NextApiResponse } from "next";
 import { getServerSession } from "next-auth";
 import { authOptions } from "../auth/[...nextauth]";
 import { db } from "../../../db/db";
+import { TradeStatus } from "@prisma/client";
 
 export const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method === "POST") {
-    if (!req.body?.theirArtId || !req.body?.myArtId) {
+    if (!req.body?.theirArtId || !req.body?.myArtUrl) {
       res.status(400).send("missing-fields");
       return;
     }
@@ -39,29 +40,13 @@ export const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       return res.status(404).send("their-art-not-found");
     }
 
-    const myArt = await db.post.findUnique({
-      where: {
-        id: req.body.myArtId,
-      },
-      select: {
-        authorId: true,
-      },
-    });
-
-    if (!myArt) {
-      return res.status(404).send("my-art-not-found");
-    }
-
-    if (myArt.authorId !== user.id) {
-      return res.status(401).send("unauthorized");
-    }
-
     const trade = await db.trade.create({
       data: {
         authorId: theirArt.authorId,
-        requesterId: myArt.authorId,
+        requesterId: user.id,
         postId: theirArt.id,
-        status: "pending",
+        status: TradeStatus.pending,
+        imageUrl: req.body.myArtUrl,
       },
     });
 
