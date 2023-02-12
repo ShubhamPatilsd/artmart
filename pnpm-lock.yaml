@@ -15,9 +15,11 @@ specifiers:
   postcss: ^8.4.21
   prisma: ^4.10.1
   react: 18.2.0
+  react-collapsed: ^3.6.0
   react-dom: 18.2.0
   react-icons: ^4.7.1
   tailwindcss: ^3.2.6
+  truncate: ^3.0.0
   typescript: 4.9.5
 
 dependencies:
@@ -32,8 +34,10 @@ dependencies:
   next-auth: 4.19.2_3vryta7zmbcsw4rrqf4axjqggm
   next-s3-upload: 0.2.9_next@13.1.6+react@18.2.0
   react: 18.2.0
+  react-collapsed: 3.6.0_biqbaboplfbrettd7655fr4n2y
   react-dom: 18.2.0_react@18.2.0
   react-icons: 4.7.1_react@18.2.0
+  truncate: 3.0.0
   typescript: 4.9.5
 
 devDependencies:
@@ -1925,6 +1929,17 @@ packages:
     engines: {node: '>=10'}
     dev: true
 
+  /react-collapsed/3.6.0_biqbaboplfbrettd7655fr4n2y:
+    resolution: {integrity: sha512-QqtogOGl5hM9L7j7rlMCYxm4jD8Ovr8voqyYS1g5ltADhUNvxbbgtJ5MwRiajJ0DmYFOZHShpnSPz4wvJaOiKA==}
+    peerDependencies:
+      react: ^16.8 || ^17
+      react-dom: ^16.8 || ^17
+    dependencies:
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
+      tiny-warning: 1.0.3
+    dev: false
+
   /react-dom/18.2.0_react@18.2.0:
     resolution: {integrity: sha512-6IMTriUmvsjHUjNtEDudZfuDQUoWXVxKHhlEGSk81n4YFS+r/Kl99wXiwlVXtPBtJenozv2P+hxDsw9eA7Xo6g==}
     peerDependencies:
@@ -2083,12 +2098,20 @@ packages:
       - ts-node
     dev: true
 
+  /tiny-warning/1.0.3:
+    resolution: {integrity: sha512-lBN9zLN/oAf68o3zNXYrdCt1kP8WsiGW8Oo2ka41b2IM5JL/S1CTyX1rW0mb/zSuJun0ZUrDxx4sqvYS2FWzPA==}
+    dev: false
+
   /to-regex-range/5.0.1:
     resolution: {integrity: sha512-65P7iz6X5yEr1cwcgvQxbbIw7Uk3gOy5dIdtZ4rDveLqhrdJP+Li/Hx6tyK0NEb+2GCyneCMJiGqrADCSNk8sQ==}
     engines: {node: '>=8.0'}
     dependencies:
       is-number: 7.0.0
     dev: true
+
+  /truncate/3.0.0:
+    resolution: {integrity: sha512-C+0Xojw7wZPl6MDq5UjMTuxZvBPK04mtdFet7k+GSZPINcvLZFCXg+15kWIL4wAqDB7CksIsKiRLbQ1wa7rKdw==}
+    dev: false
 
   /tslib/1.14.1:
     resolution: {integrity: sha512-Xni35NKzjgMrwevysHTCArtLDpPvye8zV/0E4EyYn43P7/7qvQwPh9BGkHewbMulVntbigmcT7rdX3BNo9wRJg==}

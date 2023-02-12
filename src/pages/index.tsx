@@ -58,12 +58,20 @@ export default function Home() {
         <p className="text-center font-bold text-lg font-mono	">
           The place for trading art pieces.
         </p>
-        <Link
-          href={session ? "/gallery" : "/artwork/create"}
-          className="text-white transition-all duration-500 bg-gradient-to-br to-indigo-600 via-purple-500 from-fuchsia-500 bg-size-200 bg-pos-0 hover:bg-pos-100 text-xl font-semibold rounded-md px-6 py-2"
-        >
-          {session ? "Visit Gallery" : "Get Started"}
-        </Link>
+        <div className="space-x-2">
+          <Link
+            href="/artwork/create"
+            className="text-white transition-all duration-500 bg-gradient-to-br to-indigo-600 via-purple-500 from-fuchsia-500 bg-size-200 bg-pos-0 hover:bg-pos-100 text-xl font-semibold rounded-md px-6 py-2"
+          >
+            Upload Art
+          </Link>
+          <Link
+            href="/gallery"
+            className="text-white transition-all duration-500 bg-gradient-to-br to-emerald-500 via-cyan-500 from-blue-500 bg-size-200 bg-pos-0 hover:bg-pos-100 text-xl font-semibold rounded-md px-6 py-2"
+          >
+            View Gallery
+          </Link>
+        </div>
       </div>
     </>
   );

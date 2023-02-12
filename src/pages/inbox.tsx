@@ -16,39 +16,21 @@ import truncate from "truncate";
 import useCollapse from "react-collapsed";
 import { VscTriangleRight } from "react-icons/vsc";
 import { HiX, HiOutlineBadgeCheck } from "react-icons/hi";
+import { Trade, TradeStatus, User } from "@prisma/client";
 
-const dummyData = [
-  {
-    subject: "New trade request for Mono Liso from Gautam Paranjape",
-    imageUrl:
-      "https://evergreen-media.s3.us-west-1.amazonaws.com/next-s3-uploads/606df81b-8e37-424d-a5d9-9fd7cad00372/Frame-1-(2).png",
-  },
-  {
-    subject: "New trade request for Mono Liso from Gautam Paranjape",
-  },
-  {
-    subject: "New trade request for Mono Liso from Gautam Paranjape",
-  },
-  {
-    subject: "New trade request for Mono Liso from Gautam Paranjape",
-  },
-  {
-    subject: "New trade request for Mono Liso from Gautam Paranjape",
-  },
-  {
-    subject: "New trade request for Mono Liso from Gautam Paranjape",
-  },
-  {
-    subject: "New trade request for Mono Liso from Gautam Paranjape",
-  },
-];
-
-export default function Inbox({ posts }: { posts: any[] }) {
+const List = ({
+  posts,
+}: {
+  posts: (Trade & {
+    postInQuestion: Post;
+    to: User;
+    from: User;
+  })[];
+}) => {
   const router = useRouter();
-
   return (
     <div className="flex justify-center">
-      <div className="w-[75%] pt-2">
+      <div className="w-full">
         {posts.map((post, i) => {
           const { getCollapseProps, getToggleProps, isExpanded } =
             useCollapse();
@@ -60,7 +42,7 @@ export default function Inbox({ posts }: { posts: any[] }) {
             >
               <div className="flex items-center justify-between">
                 <p className="font-bold font-mono text-gray-600 text-sm text-left">
-                  New trade request for {post.postInQuestion.title}
+                  {post.postInQuestion.title}
                 </p>
 
                 <div className="flex rounded-md border">
@@ -68,16 +50,34 @@ export default function Inbox({ posts }: { posts: any[] }) {
                   <HiOutlineBadgeCheck
                     className="p-2 hover:bg-slate-100 hover:text-purple-700 rounded-l-md"
                     size={35}
-                    onClick={() => {
-                      alert("hi");
+                    onClick={async () => {
+                      await fetch("/api/trade/accept", {
+                        method: "POST",
+                        headers: {
+                          "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify({
+                          tradeId: post.id,
+                        }),
+                      });
+                      router.replace(router.asPath);
                     }}
                   />
 
                   <HiX
                     className="p-2 hover:bg-slate-100 hover:text-red-700 rounded-r-md border-l"
                     size={35}
-                    onClick={() => {
-                      alert("hi");
+                    onClick={async () => {
+                      await fetch("/api/trade/decline", {
+                        method: "POST",
+                        headers: {
+                          "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify({
+                          tradeId: post.id,
+                        }),
+                      });
+                      router.replace(router.asPath);
                     }}
                   />
                   {/* </button> */}
@@ -109,14 +109,50 @@ export default function Inbox({ posts }: { posts: any[] }) {
       </div>
     </div>
   );
+};
+
+export default function Inbox({
+  posts: { pendingRequests, acceptedRequests, rejectedRequests },
+}: {
+  posts: {
+    pendingRequests: (Trade & {
+      postInQuestion: Post;
+      to: User;
+      from: User;
+    })[];
+    acceptedRequests: (Trade & {
+      postInQuestion: Post;
+      to: User;
+      from: User;
+    })[];
+    rejectedRequests: (Trade & {
+      postInQuestion: Post;
+      to: User;
+      from: User;
+    })[];
+  };
+}) {
+  return (
+    <div className="w-[75%] mx-auto">
+      <h2>Pending</h2>
+      <List posts={pendingRequests} />
+
+      <h2>Accepted</h2>
+      <List posts={acceptedRequests} />
+
+      <h2>Rejected</h2>
+      <List posts={rejectedRequests} />
+    </div>
+  );
 }
 
 export const getServerSideProps = async (context: any) => {
   const session = await getServerSession(context.req, context.res, authOptions);
 
-  const requests = await db.trade.findMany({
+  const pendingRequests = await db.trade.findMany({
     where: {
       authorId: session.user?.id,
+      status: TradeStatus.pending,
     },
     include: {
       to: true,
@@ -124,5 +160,37 @@ export const getServerSideProps = async (context: any) => {
       postInQuestion: true,
     },
   });
-  return { props: { posts: JSON.parse(JSON.stringify(requests)) } };
+  const acceptedRequests = await db.trade.findMany({
+    where: {
+      authorId: session.user?.id,
+      status: TradeStatus.accepted,
+    },
+    include: {
+      to: true,
+      from: true,
+      postInQuestion: true,
+    },
+  });
+  const rejectedRequests = await db.trade.findMany({
+    where: {
+      authorId: session.user?.id,
+      status: TradeStatus.rejected,
+    },
+    include: {
+      to: true,
+      from: true,
+      postInQuestion: true,
+    },
+  });
+  return {
+    props: {
+      posts: JSON.parse(
+        JSON.stringify({
+          pendingRequests,
+          acceptedRequests,
+          rejectedRequests,
+        })
+      ),
+    },
+  };
 };

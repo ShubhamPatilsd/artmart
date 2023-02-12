@@ -2,6 +2,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 import { getServerSession } from "next-auth";
 import { authOptions } from "../auth/[...nextauth]";
 import { db } from "../../../db/db";
+import { TradeStatus } from "@prisma/client";
 
 export const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method === "POST") {
@@ -29,7 +30,7 @@ export const handler = async (req: NextApiRequest, res: NextApiResponse) => {
           },
           data: {
             accepted: true,
-            status: "accepted",
+            status: TradeStatus.accepted,
           },
         });
 
@@ -37,7 +38,7 @@ export const handler = async (req: NextApiRequest, res: NextApiResponse) => {
           return res.status(500).send("internal-server-error");
         }
 
-        return res.status(200);
+        return res.status(200).end();
       }
     } else {
       return res.status(401).send("unauthorized");
