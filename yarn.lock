@@ -1776,6 +1776,13 @@ quick-lru@^5.1.1:
   resolved "https://registry.yarnpkg.com/quick-lru/-/quick-lru-5.1.1.tgz#366493e6b3e42a3a6885e2e99d18f80fb7a8c932"
   integrity sha512-WuyALRjWPDGtt/wzJiadO5AXY+8hZ80hVpe6MyivgraREW751X3SbhRvG3eLKOYN+8VEvqLcf3wdnt44Z4S4SA==
 
+react-collapsed@^3.6.0:
+  version "3.6.0"
+  resolved "https://registry.yarnpkg.com/react-collapsed/-/react-collapsed-3.6.0.tgz#884a88f0cd2ddf3f857ef651460bf3fb47700a9d"
+  integrity sha512-QqtogOGl5hM9L7j7rlMCYxm4jD8Ovr8voqyYS1g5ltADhUNvxbbgtJ5MwRiajJ0DmYFOZHShpnSPz4wvJaOiKA==
+  dependencies:
+    tiny-warning "^1.0.3"
+
 react-dom@18.2.0:
   version "18.2.0"
   resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-18.2.0.tgz#22aaf38708db2674ed9ada224ca4aa708d821e3d"
@@ -1923,12 +1930,22 @@ tailwindcss@^3.2.6:
     quick-lru "^5.1.1"
     resolve "^1.22.1"
 
+tiny-warning@^1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/tiny-warning/-/tiny-warning-1.0.3.tgz#94a30db453df4c643d0fd566060d60a875d84754"
+  integrity sha512-lBN9zLN/oAf68o3zNXYrdCt1kP8WsiGW8Oo2ka41b2IM5JL/S1CTyX1rW0mb/zSuJun0ZUrDxx4sqvYS2FWzPA==
+
 to-regex-range@^5.0.1:
   version "5.0.1"
   resolved "https://registry.yarnpkg.com/to-regex-range/-/to-regex-range-5.0.1.tgz#1648c44aae7c8d988a326018ed72f5b4dd0392e4"
   integrity sha512-65P7iz6X5yEr1cwcgvQxbbIw7Uk3gOy5dIdtZ4rDveLqhrdJP+Li/Hx6tyK0NEb+2GCyneCMJiGqrADCSNk8sQ==
   dependencies:
     is-number "^7.0.0"
+
+truncate@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/truncate/-/truncate-3.0.0.tgz#7dbe19e2f72c614e36b79bab00fbfbeb1cbaf078"
+  integrity sha512-C+0Xojw7wZPl6MDq5UjMTuxZvBPK04mtdFet7k+GSZPINcvLZFCXg+15kWIL4wAqDB7CksIsKiRLbQ1wa7rKdw==
 
 tslib@^1.11.1:
   version "1.14.1"
