@@ -48,7 +48,7 @@ const IndividualArtwork: NextPage<IndividualArtworkProps> = ({
             </span>
             <Link
               className="flex ml-auto bg-purple-700 py-1.5 px-6 text-base font-semibold text-white rounded-md hover:from-pink-400 hover:via-fuchsia-600 hover:to-purple-700"
-              href="/"
+              href={`/artwork/${individualArtwork.id}/trade`}
             >
               Trade
             </Link>
