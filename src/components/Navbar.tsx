@@ -15,7 +15,7 @@ const Navbar = () => {
       <div className="h-full flex justify-between items-center max-w-5xl mx-auto">
         <div>
           <Link href="/" className="font-bold text-purple-700 text-2xl">
-            ArtMart
+            🎨 {"  ArtMart"}
           </Link>
         </div>
         {status === "loading" ? null : status === "authenticated" ? (
