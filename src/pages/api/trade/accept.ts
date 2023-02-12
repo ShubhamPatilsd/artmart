@@ -29,6 +29,7 @@ export const handler = async (req: NextApiRequest, res: NextApiResponse) => {
           },
           data: {
             accepted: true,
+            status: "accepted",
           },
         });
 

@@ -61,6 +61,7 @@ export const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         authorId: theirArt.authorId,
         requesterId: myArt.authorId,
         postId: theirArt.id,
+        status: "pending",
       },
     });
 
