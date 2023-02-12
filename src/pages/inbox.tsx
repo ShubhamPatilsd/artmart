@@ -19,6 +19,8 @@ import { VscTriangleRight } from "react-icons/vsc";
 const dummyData = [
   {
     subject: "New trade request for Mono Liso from Gautam Paranjape",
+    imageUrl:
+      "https://evergreen-media.s3.us-west-1.amazonaws.com/next-s3-uploads/606df81b-8e37-424d-a5d9-9fd7cad00372/Frame-1-(2).png",
   },
   {
     subject: "New trade request for Mono Liso from Gautam Paranjape",
@@ -50,8 +52,8 @@ export default function Inbox({ posts }: { posts: Post[] }) {
           const { getCollapseProps, getToggleProps, isExpanded } =
             useCollapse();
           return (
-            <div className="border-t hover:shadow-md relative px-6 py-2  justify-between cursor-pointer border-purple-300 shadow-purple-200">
-              <p className="font-medium  text-gray-600 text-sm text-left">
+            <div className="border-t hover:shadow-md relative px-6 py-4  justify-between cursor-pointer border-purple-300 shadow-purple-200">
+              <p className="font-bold font-mono text-gray-600 text-sm text-left">
                 {post.subject}
               </p>
               <button
@@ -63,11 +65,14 @@ export default function Inbox({ posts }: { posts: Post[] }) {
                   className={`${isExpanded && "rotate-90"} text-gray-600`}
                   size={12}
                 />
-                <p className="text-xs text-gray-600">Expand</p>
+                <p className="text-xs text-gray-600 mb-1">Expand</p>
               </button>
 
               {isExpanded}
-              <p {...getCollapseProps()}>hi</p>
+              <p {...getCollapseProps()} className="text-center">
+                {" "}
+                <img src={post.imageUrl} className="w-full rounded-md" />
+              </p>
             </div>
           );
         })}
