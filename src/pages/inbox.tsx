@@ -15,6 +15,7 @@ import { authOptions } from "./api/auth/[...nextauth]";
 import truncate from "truncate";
 import useCollapse from "react-collapsed";
 import { VscTriangleRight } from "react-icons/vsc";
+import { HiX, HiOutlineBadgeCheck } from "react-icons/hi";
 
 const dummyData = [
   {
@@ -53,9 +54,31 @@ export default function Inbox({ posts }: { posts: Post[] }) {
             useCollapse();
           return (
             <div className="border-t hover:shadow-md relative px-6 py-4  justify-between cursor-pointer border-purple-300 shadow-purple-200">
-              <p className="font-bold font-mono text-gray-600 text-sm text-left">
-                {post.subject}
-              </p>
+              <div className="flex items-center justify-between">
+                <p className="font-bold font-mono text-gray-600 text-sm text-left">
+                  {post.subject}
+                </p>
+
+                <div className="flex">
+                  {/* <button> */}
+                  <HiOutlineBadgeCheck
+                    className="p-2 hover:bg-slate-100 hover:text-purple-700 rounded-l-md"
+                    size={35}
+                    onClick={() => {
+                      alert("hi");
+                    }}
+                  />
+
+                  <HiX
+                    className="p-2 hover:bg-slate-100 hover:text-red-700 rounded-r-md border-l"
+                    size={35}
+                    onClick={() => {
+                      alert("hi");
+                    }}
+                  />
+                  {/* </button> */}
+                </div>
+              </div>
               <button
                 className="mt-2 flex space-x-1 items-center"
                 {...getToggleProps()}
@@ -69,9 +92,12 @@ export default function Inbox({ posts }: { posts: Post[] }) {
               </button>
 
               {isExpanded}
-              <p {...getCollapseProps()} className="text-center">
+              <p {...getCollapseProps()} className="">
                 {" "}
-                <img src={post.imageUrl} className="w-full rounded-md" />
+                <img
+                  src={post.imageUrl}
+                  className="w-full max-w-xl h-auto rounded-md"
+                />
               </p>
             </div>
           );
