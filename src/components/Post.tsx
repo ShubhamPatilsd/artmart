@@ -30,10 +30,17 @@ export const Post: React.FC<PostProps> = ({
           <span className="bg-purple-100 px-2 py-1 text-purple-700 font-medium tracking-wider lowercase rounded-md text-xs">
             {category}
           </span>
+          <div className="space-y-1">
+            <h4 className="font-bold text-xl">{title}</h4>
+            <p className="text-sm text-gray-600">{description}</p>
+          </div>
         </div>
-        <div className="space-y-1">
-          <h4 className="font-bold text-xl">{title}</h4>
-          <p className="text-sm text-gray-600">{description}</p>
+
+        <div className="flex space-x-2 items-center">
+          <img src={authorPhoto} className="w-10 h-10 rounded-full" />
+          <div>
+            <p className="text-sm font-semibold font-mono">{authorName}</p>
+          </div>
         </div>
       </div>
     </div>

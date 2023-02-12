@@ -3,10 +3,11 @@ import { GetServerSideProps, NextPage } from "next";
 import { getServerSession } from "next-auth";
 import { useRouter } from "next/router";
 import { authOptions } from "../api/auth/[...nextauth]";
+import { Post } from "@/types/Post";
 import Link from "next/link";
 
 interface IndividualArtworkProps {
-  individualArtwork: any;
+  individualArtwork: Post;
 }
 
 const IndividualArtwork: NextPage<IndividualArtworkProps> = ({

@@ -7,9 +7,19 @@ import { useSession, signIn, signOut } from "next-auth/react";
 import { FcGoogle } from "react-icons/fc";
 import { db } from "@/db/db";
 import { Post } from "@/components/Post";
+import { Post as PostType } from "@prisma/client";
 import { useRouter } from "next/router";
 
-export default function Dashboard({ posts }: { posts: Post[] }) {
+export default function Dashboard({
+  posts,
+}: {
+  posts: (PostType & {
+    author: {
+      name: string;
+      image: string;
+    };
+  })[];
+}) {
   const router = useRouter();
 
   return (
@@ -36,24 +46,6 @@ export default function Dashboard({ posts }: { posts: Post[] }) {
   );
 }
 
-interface Post {
-  id: string;
-  title: string;
-  description: string;
-  imageUrl: string;
-  category: string;
-  preferredTrade: string;
-  authorId: string;
-  createdAt: Date;
-  updatedAt: Date;
-  author: Author;
-}
-
-interface Author {
-  image: string;
-  name: string;
-}
-
 export const getServerSideProps = async () => {
   const posts = await db.post.findMany({
     where: {},
@@ -62,6 +54,7 @@ export const getServerSideProps = async () => {
         select: {
           image: true,
           name: true,
+          email: true,
         },
       },
     },

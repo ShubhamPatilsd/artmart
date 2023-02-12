@@ -49,14 +49,29 @@ model Session {
 }
 
 model User {
-  id            String    @id @default(cuid())
-  name          String?
-  email         String?   @unique
-  emailVerified DateTime?
-  image         String?
-  accounts      Account[]
-  sessions      Session[]
-  Post          Post[]
+  id               String    @id @default(cuid())
+  name             String?
+  email            String?   @unique
+  emailVerified    DateTime?
+  image            String?
+  accounts         Account[]
+  requests         Trade[]   @relation("requests")
+  incomingRequests Trade[]   @relation("incoming")
+  sessions         Session[]
+  Post             Post[]
+}
+
+model Trade {
+  id       String @id @default(cuid())
+  // Relations
+  to       User   @relation("incoming", fields: [authorId], references: [id])
+  authorId String
+
+  from        User   @relation(name: "requests", fields: [requesterId], references: [id])
+  requesterId String
+
+  postInQuestion Post   @relation(fields: [postId], references: [id])
+  postId         String
 }
 
 model VerificationToken {
@@ -83,4 +98,5 @@ model Post {
   // Timestamps
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  Trade     Trade[]
 }
