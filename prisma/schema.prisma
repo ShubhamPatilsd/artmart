@@ -68,18 +68,17 @@ model User {
 }
 
 model Trade {
-  id       String  @id @default(cuid())
-  accepted Boolean @default(false)
+  id             String      @id @default(cuid())
+  accepted       Boolean     @default(false)
   // Relations
-  to       User    @relation("incoming", fields: [authorId], references: [id])
-  authorId String
-
-  from        User   @relation(name: "requests", fields: [requesterId], references: [id])
-  requesterId String
-
-  postInQuestion Post   @relation(fields: [postId], references: [id])
+  to             User        @relation("incoming", fields: [authorId], references: [id])
+  authorId       String
+  from           User        @relation(name: "requests", fields: [requesterId], references: [id])
+  requesterId    String
+  postInQuestion Post        @relation(fields: [postId], references: [id])
   postId         String
-  status TradeStatus
+  status         TradeStatus
+  imageUrl       String
 }
 
 model VerificationToken {
